@@ -2,7 +2,7 @@ name: Validate Conventional Commits
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, edited, synchronize]
 
 jobs:
   validate-commits:
@@ -14,6 +14,8 @@ jobs:
           fetch-depth: 0
 
       - name: Validate Commits
-        uses: afcody/action-commitlint@v2
+        uses: wagoid/commitlint-github-action@v5
+        with:
+          preset: conventional
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
