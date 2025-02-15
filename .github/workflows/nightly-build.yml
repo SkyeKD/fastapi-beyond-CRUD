@@ -23,7 +23,7 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo "DATABASE_URL=sqlite:///test.db" >> $GITHUB_ENV
+          echo "DATABASE_URL=sqlite+aiosqlite:///test.db" >> $GITHUB_ENV
           echo "JWT_SECRET=mysecret" >> $GITHUB_ENV
           echo "JWT_ALGORITHM=HS256" >> $GITHUB_ENV
           echo "MAIL_USERNAME=test@example.com" >> $GITHUB_ENV
@@ -38,6 +38,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install aiosqlite
 
       - name: Install Pytest
         run: pip install pytest
