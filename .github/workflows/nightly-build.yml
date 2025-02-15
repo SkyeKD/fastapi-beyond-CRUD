@@ -2,8 +2,10 @@ name: Nightly Build and Push to Docker Hub
 
 on:
   schedule:
-    - cron: "15 5 * * *"   # SFtime 9:15 pM (PST, UTC-8)
-  workflow_dispatch:  # Allows manual triggering
+
+    - cron: "*/10 * * * *"  # run every 10 minutes
+  workflow_dispatch:
+
 
 
 jobs:
@@ -20,7 +22,12 @@ jobs:
           python-version: "3.10"
 
       - name: Install Dependencies
-        run: pip install -r requirements.txt
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Install Pytest
+        run: pip install pytest
 
       - name: Run Tests
         run: pytest tests/  # Adjust based on your project structure
