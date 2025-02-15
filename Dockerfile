@@ -10,8 +10,6 @@ COPY . .
 
 COPY .env.example .env
 
-RUN alembic upgrade head
-
 RUN chmod +x runworker.sh
 
 EXPOSE 8000
