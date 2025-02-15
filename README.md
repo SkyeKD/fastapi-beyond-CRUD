@@ -47,7 +47,28 @@ cd fastapi-beyond-CRUD/
 
 ✅ **Environment Setup**  
 - **No extra downloads required**.  
-- **Everything runs inside Docker**.  
+- **Everything runs inside Docker**.
+
+## **📌 Setup Instructions**
+
+### 🔹 **Configure SendGrid for Email Notifications**
+To enable email notifications for failed PRs and nightly builds, follow these steps:
+
+1. **Sign up for SendGrid** (if you haven’t already):  
+   👉 [SendGrid Sign Up](https://sendgrid.com/)  
+   
+2. **Create an API Key**:  
+   - Go to **Settings** → **API Keys**  
+   - Click **Create API Key**  
+   - Choose **Full Access** or **Restricted Access (Email Sending)**  
+   - Copy the generated API Key
+
+3. **Add the API Key to GitHub Secrets**:
+   - Navigate to your GitHub repository  
+   - Click on **Settings** → **Secrets and variables** → **Actions**  
+   - Click **New repository secret**  
+   - Name it `SENDGRID_API_KEY` and paste the copied API key  
+   - Click **Save** 
  ## **📁 Project Structure**
  ```bash
 fastapi-beyond-CRUD/
