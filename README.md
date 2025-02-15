@@ -1,80 +1,126 @@
-# FastAPI Beyond CRUD 
+# **FastAPI Beyond CRUD 🚀**
 
-This is the source code for the [FastAPI Beyond CRUD](https://youtube.com/playlist?list=PLEt8Tae2spYnHy378vMlPH--87cfeh33P&si=rl-08ktaRjcm2aIQ) course. The course focuses on FastAPI development concepts that go beyond the basic CRUD operations.
+This is a **FastAPI** project focused on building scalable APIs beyond basic CRUD operations.  
+It includes **background task processing**, **automated testing**, **CI/CD pipelines**, and **GitHub Actions** for **enforcing commit conventions and nightly builds**.
 
-For more details, visit the project's [website](https://jod35.github.io/fastapi-beyond-crud-docs/site/).
+📌 **Features:**
+- ✅ **FastAPI** framework for high-performance APIs
+- ✅ **PostgreSQL** database integration
+- ✅ **Redis + Celery** for background task processing
+- ✅ **GitHub Actions** for **CI/CD & Conventional Commits**
+- ✅ **Automated nightly builds** (12 AM SF time)
+- ✅ **Failure notifications via SendGrid Email**
+- ✅ **Fully Dockerized**: Just run `docker compose up`
 
-## Table of Contents
+---
 
+## **📌 Table of Contents**
 1. [Getting Started](#getting-started)
-2. [Prerequisites](#prerequisites)
-3. [Project Setup](#project-setup)
+2. [Updated Requirements](#updated-requirements)
+3. [Project Structure](#project-structure)
 4. [Running the Application](#running-the-application)
 5. [Running Tests](#running-tests)
 6. [Contributing](#contributing)
 
-## Getting Started
-Follow the instructions below to set up and run your FastAPI project.
+---
 
-### Prerequisites
-Ensure you have the following installed:
+## **🚀 Getting Started**
+### **🔧 Prerequisites**
+Ensure you have **Docker** installed before proceeding.
 
-- Python >= 3.10
-- PostgreSQL
-- Redis
-
-### Project Setup
-1. Clone the project repository:
-    ```bash
-    git clone https://github.com/jod35/fastapi-beyond-CRUD.git
-    ```
-   
-2. Navigate to the project directory:
-    ```bash
-    cd fastapi-beyond-CRUD/
-    ```
-
-3. Create and activate a virtual environment:
-    ```bash
-    python3 -m venv env
-    source env/bin/activate
-    ```
-
-4. Install the required dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-5. Set up environment variables by copying the example configuration:
-    ```bash
-    cp .env.example .env
-    ```
-
-6. Run database migrations to initialize the database schema:
-    ```bash
-    alembic upgrade head
-    ```
-
-7. Open a new terminal and ensure your virtual environment is active. Start the Celery worker (Linux/Unix shell):
-    ```bash
-    sh runworker.sh
-    ```
-
-## Running the Application
-Start the application:
-
+### **📥 Clone the repository**
 ```bash
-fastapi dev src/
+git clone [https://github.com/jod35/fastapi-beyond-CRUD.git](https://github.com/SkyeKD/fastapi-beyond-CRUD.git)
+cd fastapi-beyond-CRUD/
 ```
-Alternatively, you can run the application using Docker:
+## **📌 Updated Requirements**
+
+✅ **GitHub Actions for Conventional Commits**  
+1. Enforces **Conventional Commits** on PRs.  
+2. Closes PRs if the commit message is **invalid**.  
+3. Sends **failure notifications** to contributors.  
+
+✅ **Nightly Build & Test Workflow**  
+1. Runs **every night at 12 AM SF Time** (`cron: "0 8 * * *"`).  
+2. Builds and pushes **Docker images** **only if all tests pass**.  
+3. **Failure notifications** sent via **SendGrid Email**.  
+
+✅ **Environment Setup**  
+- **No extra downloads required**.  
+- **Everything runs inside Docker**.  
+ ## **📁 Project Structure**
+ ```bash
+fastapi-beyond-CRUD/
+│── src/                     # Main application source code
+│   ├── auth/                # Authentication module
+│   ├── books/               # Books API module
+│   ├── reviews/             # Reviews API module
+│   ├── tags/                # Tags API module
+│   ├── celery_tasks/        # Background task processing with Celery
+│   ├── database/            # Database models and migrations
+│   ├── middleware/          # Custom middlewares
+│   ├── errors/              # Custom error handlers
+│   └── __init__.py          # Application entry point
+│
+│── .github/workflows/       # CI/CD workflows for GitHub Actions
+│── tests/                   # Unit and integration tests
+│── Dockerfile               # Docker image definition
+│── docker-compose.yml        # Docker orchestration
+│── .env.example             # Example environment variables
+│── requirements.txt         # Project dependencies
+│── README.md                # Project documentation
+```
+## **🚀 Running the Application**
+### **🔧 Start API & Background Workers**
+1. open Docker Desktop
+2. copy .env.example to .env
 ```bash
-docker compose up -d
+copy .env.example .env
 ```
-## Running Tests
-Run the tests using this command
+3. start application 
+```bash
+docker compose up
+```
+### **🌍 Access API Endpoints**
+**📌 OpenAPI Docs: http://localhost:8000/api/v1/docs**
+
+**📌 Example API Call:**
+```
+curl -X POST http://localhost:8000/api/v1/auth/login -d '{"username": "test", "password": "pass"}' -H "Content-Type: application/json"
+```
+```
+{"detail":[{"type":"missing","loc":["body","email"],"msg":"Field required","input":{"username":"test","password":"pass"}},{"type":"string_too_short","loc":["body","password"],"msg":"String should have at least 6 characters","input":"pass","ctx":{"min_length":6}}]}
+```
+## **🧪 Running Tests**
 ```bash
 pytest
 ```
+## **📌 Contributing**
+- 1. Fork the repository and create a new branch.
+- 2. Use Conventional Commits (GitHub Actions will enforce this).
+- 3. Submit a Pull Request (PR).
+### **📌 Commit Message Format Example:**
+ ```bash
+feat: add JWT authentication
+fix: resolve API pagination bug
+```
+## **📌 List of Changes**
 
-## Contributing
-I welcome contributions to improve the documentation! You can contribute [here](https://github.com/jod35/fastapi-beyond-crud-docs).
+### 🔹 **1. Added GitHub Actions**
+- Add `commit-check.yml` and `nightly-build.yml`.
+- ✅ Enforce **Conventional Commits** on PRs.
+- ✅ Automate **Nightly Builds** at **12 AM SF time** (`cron: "0 8 * * *"`).
+- ✅ Send **failure notifications** for PRs/tests.
+
+### 🔹 **2. Updated `docker-compose.yml` and `Dockerfile`**
+- 🚀 Runs **without extra downloads**.
+- 🔧 **Automatically loads** environment variables.
+
+### 🔹 **3. Modified .env.example**
+- 🔧 Add configuration.
+
+### 🔹 **4. Enabled Background Task Processing**
+- ⚡ **Celery Workers** running inside Docker.
+
+### 🔹 **5. Integrated Email Notifications**
+- 📧 **SendGrid Email** for **failure alerts**.
