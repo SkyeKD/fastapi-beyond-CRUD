@@ -2,8 +2,11 @@ name: Nightly Build and Push to Docker Hub
 
 on:
   schedule:
+
     - cron: "*/10 * * * *"  # run every 10 minutes
   workflow_dispatch:
+
+
 
 jobs:
   test-and-build:
