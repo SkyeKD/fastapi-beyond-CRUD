@@ -5,7 +5,7 @@ services:
     build: .
     volumes:
       - .:/app
-    environment: 
+    environment:
       DATABASE_URL: ${DATABASE_URL}
       JWT_SECRET: ${JWT_SECRET}
       JWT_ALGORITHM: ${JWT_ALGORITHM}
@@ -28,12 +28,15 @@ services:
     networks:
       - app-network
 
+    command: >
+      sh -c "[ -f .env ] || cp .env.example .env && alembic upgrade head && uvicorn src.main:app --host 0.0.0.0 --port 8000" 
+
   db:
     image: postgres:15
 
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_DB: bookly
+      POSTGRES_DB: book
       POSTGRES_PASSWORD: testpass
 
     ports:
