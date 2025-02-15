@@ -2,8 +2,9 @@ name: Nightly Build and Push to Docker Hub
 
 on:
   schedule:
-    - cron: "15 5 * * *"  # SFtime 9:15 pM (PST, UTC-8)
-  workflow_dispatch:  
+    - cron: "15 5 * * *"   # SFtime 9:15 pM (PST, UTC-8)
+  workflow_dispatch:  # Allows manual triggering
+
 
 jobs:
   test-and-build:
