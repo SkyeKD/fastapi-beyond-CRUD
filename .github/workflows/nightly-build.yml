@@ -29,8 +29,10 @@ jobs:
       - name: Install Pytest
         run: pip install pytest
 
-      - name: Run Tests
-        run: pytest tests/  # Adjust based on your project structure
+      - name: Run tests
+        run: |
+          ls -l src/tests/    
+          pytest src/tests/ 
 
       - name: Log in to Docker Hub
         if: success()  # Only log in if tests pass
