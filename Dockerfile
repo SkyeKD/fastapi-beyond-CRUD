@@ -8,6 +8,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+COPY .env.example .env
+
+RUN alembic upgrade head
+
+RUN chmod +x runworker.sh
+
 EXPOSE 8000
 
 ENV HOST 0.0.0.0
