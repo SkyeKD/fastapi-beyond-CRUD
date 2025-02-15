@@ -19,3 +19,35 @@ jobs:
           preset: conventional
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment and Close PR if Invalid
+        if: failure()
+        run: |
+          curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+          -d '{"body": "❌ PR closed because commit messages do not follow Conventional Commits. Please update your commits and reopen."}'
+
+          curl -X PATCH -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }} \
+          -d '{"state": "closed"}'
+
+      - name: Send Email Notification via SendGrid
+        if: failure()
+        run: |
+          curl --request POST \
+            --url https://api.sendgrid.com/v3/mail/send \
+            --header "Authorization: Bearer ${{ secrets.SENDGRID_API_KEY }}" \
+            --header "Content-Type: application/json" \
+            --data '{
+              "personalizations": [{
+                "to": [{"email": "kdai3@dons.usfca.edu"}],
+                "subject": "🚨 PR Closed: Commit Messages Not Following Conventional Commits"
+              }],
+              "from": {"email": "kdai3@dons.usfca.edu"},
+              "content": [{
+                "type": "text/plain",
+                "value": "Your PR has been closed because commit messages do not follow Conventional Commits. Please update and try again."
+              }]
+            }'
