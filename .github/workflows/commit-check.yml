@@ -1,3 +1,4 @@
+# test conventional commits
 name: Validate Conventional Commits
 
 on:
